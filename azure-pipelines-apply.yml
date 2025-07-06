@@ -20,14 +20,14 @@ steps:
 - task: TerraformCLI@1
   displayName: 'Terraform Init'
   inputs:
-    command: 'init'
+    command: 'terraform init'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 
 # Terraform Plan
 - task: TerraformCLI@1
   displayName: 'Terraform Plan'
   inputs:
-    command: 'plan'
+    command: 'terraform plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     environmentServiceName: 'ado-terraform-sp'
     commandOptions: '-var-file="terraform.tfvars"'
@@ -36,7 +36,7 @@ steps:
 - task: TerraformCLI@1
   displayName: 'Terraform Apply'
   inputs:
-    command: 'apply'
+    command: 'terraform apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     environmentServiceName: 'ado-terraform-sp'
     commandOptions: '-auto-approve -var-file="terraform.tfvars"'
