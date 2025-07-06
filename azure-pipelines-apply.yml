@@ -16,20 +16,27 @@ steps:
   inputs:
     terraformVersion: '1.5.0'
 
-- script: terraform init
+# Terraform Init
+- task: TerraformCLI@1
   displayName: 'Terraform Init'
+  inputs:
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-- script: terraform plan -var-file="terraform.tfvars"
+# Terraform Plan
+- task: TerraformCLI@1
   displayName: 'Terraform Plan'
+  inputs:
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    environmentServiceName: 'ado-terraform-sp'
+    commandOptions: '-var-file="terraform.tfvars"'
 
-- script: terraform apply -auto-approve -var-file="terraform.tfvars"
+# Terraform Apply
+- task: TerraformCLI@1
   displayName: 'Terraform Apply'
-- script: |
-    echo "Resource Group: $(resource_group)"
-    echo "Virtual Network: $(vnet)"
-    echo "Subnet: $(subnet)"
-    echo "Network Security Group: $(nsg)"
-    echo "Storage Account: $(storage_account)"
-    echo "Key Vault: $(key_vault)"
-    echo "MySQL Server: $(mysql_server)"
-    echo "App1 Hostname: $(app1)"
+  inputs:
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    environmentServiceName: 'ado-terraform-sp'
+    commandOptions: '-auto-approve -var-file="terraform.tfvars"'
